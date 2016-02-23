@@ -10,7 +10,7 @@ class Todo < Sinatra::Base
   get '/:number' do
     content_type :json
     number = params[:number].to_i
-    {number: number, factors: number.factors, odd: number.odd?, even: number.even?, prime: number.prime? }.to_json
+    {number: number, factors: number.factors, odd: number.odd?, even: number.even?, prime: number.prime?}.to_json
   end
 
   # start the server if ruby file executed directly
