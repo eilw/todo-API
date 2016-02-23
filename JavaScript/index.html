@@ -1,13 +1,19 @@
 <head>
 </head>
 <body>
+  <h1></h1>
   <form action='http://localhost:9292/todos' method='POST'>
     <input type='text' name='content' id="content">
     <input type='submit' value='Submit' id='submitTodo'>
   </form>
   <button type='button' id='getTasks'>Get tasks</button>
   <ul id="todo"></ul>
-  <div id='tasks'></div>
+  <ul id='tester'>
+  <li id='tester_01'>Trying to remove task1<input type='checkbox'value='tester_01' class='finish'>completed</input></li>
+  <li id='tester_02'>Trying to remove task1<input type='checkbox'value='tester_02' class='finish'>completed</input></li>
+  <li id='tester_03'>Trying to remove task1<input type='checkbox'value='tester_03' class='finish'>completed</input></li>
+
+  </ul>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src='src/interface.js'></script>
 </body>
