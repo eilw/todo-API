@@ -22,7 +22,11 @@ class Todo < Sinatra::Base
     erb :todos
   end
 
-
+  get '/api/todo' do
+    content_type :json
+    tasks = Task.all
+    {task: tasks}.to_json
+  end
 
   # get '/:number' do
   #   content_type :json

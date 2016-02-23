@@ -10,4 +10,9 @@ feature 'adding a todo' do
     expect(current_path).to eq('/todos')
     expect(page).to have_content('First todo')
   end
+
+  scenario 'the user can view the json response' do
+    visit ('/api/todo')
+    expect(page).to have_content('First todo')
+  end
 end
