@@ -7,6 +7,10 @@ gem 'sinatra'
 gem 'capybara'
 gem 'json'
 gem 'sinatra-json'
+gem 'data_mapper'
+gem 'dm-postgres-adapter'
+gem 'database_cleaner'
+gem 'rake'
 
 
 group :test do
