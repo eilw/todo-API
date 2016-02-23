@@ -19,4 +19,11 @@ $(document).ready(function(){
   $('#getTasks').click(function(){
     getTasks();
   });
+
+  $('#submitTodo').click(function(e) {
+    e.preventDefault();
+    var contentInput = $('#content').val();
+    $.post('http://localhost:9292/todos', { content: contentInput })
+    getTasks();
+  });
 });

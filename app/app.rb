@@ -13,8 +13,6 @@ class Todo < Sinatra::Base
 
   post '/todos' do
     @todo = Task.create(content: params[:content])
-    # @todo.save
-    redirect('/todos')
   end
 
   get '/todos' do
