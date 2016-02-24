@@ -8,9 +8,9 @@ require_relative 'data_mapper_setup'
 # require_relative './lib/numbers'
 
 class Todo < Sinatra::Base
-  get '/todos/new' do
-    erb :todo_new
-  end
+  # get '/todos/new' do
+  #   erb :todo_new
+  # end
 
   post '/todos' do
     @todo = Task.create(content: params[:content])
@@ -23,26 +23,27 @@ class Todo < Sinatra::Base
     redirect('/todos')
   end
 
-  get '/todos' do
-    @todos = Task.all
-    erb :todos
-  end
+  # get '/todos' do
+  #   @todos = Task.all
+  #   erb :todos
+  # end
 
-  get '/api/todo' do
+  get '/api' do
     content_type :json
     tasks = Task.all
-    {task: tasks}.to_json
+    projects = Project.all
+    {task: tasks, project: projects}.to_json
   end
 
   post '/projects' do
     Project.create(name: params[:name])
   end
 
-  get '/api/projects' do
-    content_type :json
-    projects = Project.all
-    {project: projects}.to_json
-  end
+  # get '/api/projects' do
+  #   content_type :json
+  #   projects = Project.all
+  #   {project: projects}.to_json
+  # end
 
   # get '/:number' do
   #   content_type :json

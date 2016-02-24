@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   getTasks();
   function getTasks(){
-    var url = 'http://localhost:9292/api/todo';
+    var url = 'http://localhost:9292/api';
     $.get(url, function(data){
       displayTasks(data.task);
     });
@@ -66,27 +66,33 @@ $(document).ready(function(){
     e.preventDefault();
     var nameInput = $('#project-name').val();
     $.post('http://localhost:9292/projects', { name: nameInput })
-    $('#projects').append("<li>"+nameInput+"</li>");
+    $('#projects').append("<li><a href='#'>"+nameInput+"</a></li>");
     $('#project-name').val('');
   });
 
 
   getProjects();
   function getProjects(){
-    var url = 'http://localhost:9292/api/projects';
+    var url = 'http://localhost:9292/api';
     $.get(url, function(data){
       displayProjects(data.project);
     });
   };
 
   function displayProjects(projects) {
+    $('#project-header').text(projects[0].name)
     var str = "";
     for(var i = 0; i < projects.length; i++) {
-      str += "<li id='project_" + projects[i].id + "'>" + projects[i].name + "</li>"
+      str += "<li id='project_" + projects[i].id + "'><a href='#'>" + projects[i].name + "</a></li>"
     }
     $('#projects').html(str);
   };
 
+  $('#project-overview').on('click', 'a', function(e){
+    e.preventDefault();
+    var name = $(this).after().text();
+    $('#project-header').text(name);
+  })
 
 
 

@@ -8,12 +8,12 @@ Completed:
 * That the completed tasks are checked
 * A user can hide the completed tasks
 * A user can create multiple projects
+* Only one api serves the projects and todos
+* A user needs to be able to select the current project
 
 
 Task:
-* Only one api serves the projects and todos
-* A user needs to be able to select the current project
-* A user can create task under the various projects
+* A user can create tasks under the various projects
 * A user can have three projects open at the same time
 * A user can also delete a task, even if it is not completed
 * A user can drag tasks between projects
