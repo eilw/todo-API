@@ -6,5 +6,6 @@ class Task
 
   property :id,       Serial
   property :content,  Text
+  property :completed, Boolean, default: false
 
 end

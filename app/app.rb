@@ -15,6 +15,13 @@ class Todo < Sinatra::Base
     @todo = Task.create(content: params[:content])
   end
 
+  put '/todos/:id' do
+    todo = Task.first(params[:id])
+    todo.update(completed: true)
+    todo.save
+    redirect('/todos')
+  end
+
   get '/todos' do
     @todos = Task.all
     erb :todos

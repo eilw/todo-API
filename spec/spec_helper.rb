@@ -5,6 +5,7 @@ require File.join(File.dirname(__FILE__), '..', 'app/app.rb')
 require 'capybara'
 require 'capybara/rspec'
 require 'rspec'
+require 'database_cleaner'
 require_relative '../app/data_mapper_setup'
 
 Capybara.app = Todo
@@ -50,6 +51,20 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
+
+  config.before(:suite) do # <-- before entire test run
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do # <-- create a "save point" before each test
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do # <-- after each individual test roll back to "save point"
+    DatabaseCleaner.clean
+  end
+
 
 
 # The settings below are suggested to provide a good initial experience
