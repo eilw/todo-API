@@ -2,9 +2,10 @@ $(document).ready(function(){
 
   var currentProjectID = ""
 
-  getTasks();
+  getProjects();
+  setTimeout(function() {getTasks();}, 500);
   function getTasks(){
-    var url = 'http://localhost:9292/api';
+    var url = "http://localhost:9292/api?project_id=" + currentProjectID;
     $.get(url, function(data){
       displayTasks(data.task);
     });
@@ -74,7 +75,6 @@ $(document).ready(function(){
   });
 
 
-  getProjects();
   function getProjects(){
     var url = 'http://localhost:9292/api';
     $.get(url, function(data){
@@ -83,8 +83,8 @@ $(document).ready(function(){
   };
 
   function displayProjects(projects) {
-    $('#project-header').text(projects[0].name)
-    currentProjectID = projects[0].id
+    $('#project-header').text(projects[0].name);
+    currentProjectID = projects[0].id;
     var str = "";
     for(var i = 0; i < projects.length; i++) {
       str += "<li id='project_" + projects[i].id + "'><a href='#'>" + projects[i].name + "</a></li>"
@@ -98,6 +98,7 @@ $(document).ready(function(){
     currentProjectID = $(this).parent().attr('id');
     currentProjectID = currentProjectID.slice(8,currentProjectID.length);
     $('#project-header').text(name);
+    getTasks();
   })
 
 

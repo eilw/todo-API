@@ -13,7 +13,6 @@ class Todo < Sinatra::Base
   # end
 
   post '/todos' do
-    p params[:project_id]
     @todo = Task.create(content: params[:content], project_id: params[:project_id])
   end
 
@@ -21,7 +20,6 @@ class Todo < Sinatra::Base
     todo = Task.get(params[:id])
     todo.update(completed: true)
     todo.save
-    redirect('/todos')
   end
 
   # get '/todos' do
@@ -31,7 +29,7 @@ class Todo < Sinatra::Base
 
   get '/api' do
     content_type :json
-    tasks = Task.all
+    tasks = Task.all(project_id: params[:project_id])
     projects = Project.all
     {task: tasks, project: projects}.to_json
   end
