@@ -12,7 +12,7 @@ $(document).ready(function(){
   function displayTasks(tasks) {
     var str = ""
     for(var i = 0; i < tasks.length; i++) {
-        str += "<li>" + tasks[i].content + " <input type='checkbox' class='finish' >P</input></li>";
+        str += "<li>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
     };
     $('#todo').html(str);
   };
@@ -21,9 +21,8 @@ $(document).ready(function(){
     getTasks();
   });
 
-  $('.finish').click(function(){
-    // var taskNr = $(this).attr("value");
-    $('h1').text("HELLO");
+  $('#todo').on('click', '.finish', function(){
+    $('#completed').append('<li>'+$(this).parent().html()+'</li>');
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
 
@@ -31,7 +30,7 @@ $(document).ready(function(){
     e.preventDefault();
     var contentInput = $('#content').val();
     $.post('http://localhost:9292/todos', { content: contentInput })
-    $('#todo').append("<li>"+contentInput+"</li>");
+    $('#todo').append("<li>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
   });
 });
