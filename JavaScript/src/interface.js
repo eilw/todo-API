@@ -31,6 +31,7 @@ $(document).ready(function(){
     e.preventDefault();
     var contentInput = $('#content').val();
     $.post('http://localhost:9292/todos', { content: contentInput })
-    getTasks();
+    $('#todo').append("<li>"+contentInput+"</li>");
+    $('#content').val('');
   });
 });
