@@ -4,17 +4,24 @@ $(document).ready(function(){
   function getTasks(){
     var url = 'http://localhost:9292/api/todo';
     $.get(url, function(data){
-      // $('#tasks').text(data.task);
-      displayTasks(data.task)
-    })
-  }
+      displayTasks(data.task);
+    });
+  };
 
   function displayTasks(tasks) {
-    var str = ""
+    var uncompleted = "";
+    var completed = "";
+    var inputString;
     for(var i = 0; i < tasks.length; i++) {
-        str += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
+      inputString = "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
+      if(tasks[i].completed){
+        completed += inputString
+      } else{
+        uncompleted += inputString;
+      }
     };
-    $('#todo').html(str);
+    $('#todo').html(uncompleted);
+    $('#completed').html(completed);
   };
 
   $('#getTasks').click(function(){
@@ -24,7 +31,6 @@ $(document).ready(function(){
   $('#todo').on('click', '.finish', function(){
     var id = $(this).parent().attr('id');
     id = id.slice(5,id.length)
-    console.log(id)
     $.ajax({
       url: 'http://localhost:9292/todos/'+ id,
       type: 'PUT',
