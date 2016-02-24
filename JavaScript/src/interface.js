@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+  var currentProjectID = ""
+
   getTasks();
   function getTasks(){
     var url = 'http://localhost:9292/api';
@@ -43,7 +45,8 @@ $(document).ready(function(){
   $('#submitTodo').click(function(e) {
     e.preventDefault();
     var contentInput = $('#content').val();
-    $.post('http://localhost:9292/todos', { content: contentInput })
+    $.post('http://localhost:9292/todos', { content: contentInput, project_id: currentProjectID })
+
     $('#todo').append("<li>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
   });
@@ -81,6 +84,7 @@ $(document).ready(function(){
 
   function displayProjects(projects) {
     $('#project-header').text(projects[0].name)
+    currentProjectID = projects[0].id
     var str = "";
     for(var i = 0; i < projects.length; i++) {
       str += "<li id='project_" + projects[i].id + "'><a href='#'>" + projects[i].name + "</a></li>"
@@ -91,9 +95,10 @@ $(document).ready(function(){
   $('#project-overview').on('click', 'a', function(e){
     e.preventDefault();
     var name = $(this).after().text();
+    currentProjectID = $(this).parent().attr('id');
+    currentProjectID = currentProjectID.slice(8,currentProjectID.length);
     $('#project-header').text(name);
   })
-
 
 
 });

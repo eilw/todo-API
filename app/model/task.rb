@@ -8,4 +8,6 @@ class Task
   property :content,  Text
   property :completed, Boolean, default: false
 
+  belongs_to :project
+
 end

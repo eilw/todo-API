@@ -7,4 +7,6 @@ class Project
   property :id,       Serial
   property :name,     Text
 
+  has n, :tasks
+
 end

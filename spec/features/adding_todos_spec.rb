@@ -2,7 +2,7 @@ require 'spec_helper'
 require './app/app.rb'
 
 feature 'adding a todo' do
-  scenario 'the user can add a new todo' do
+  scenario 'a task belongs in a project' do
     visit ('/todos/new')
     fill_in('content',with: 'First todo')
     click_button('Submit')
@@ -11,7 +11,7 @@ feature 'adding a todo' do
     # expect(page).to have_content('First todo')
   end
 
-  scenario 'the user can view the json response' do
+  xscenario 'the user can view the json response' do
     visit ('/api/todo')
     expect(page).to have_content('First todo')
   end
@@ -30,6 +30,5 @@ feature 'updating a todo complete status' do
     visit('/todos/1')
     # expect(task.completed).to eq true
     expect(current_path).to eq('/todos')
-
   end
 end

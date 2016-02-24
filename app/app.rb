@@ -13,7 +13,8 @@ class Todo < Sinatra::Base
   # end
 
   post '/todos' do
-    @todo = Task.create(content: params[:content])
+    p params[:project_id]
+    @todo = Task.create(content: params[:content], project_id: params[:project_id])
   end
 
   put '/todos/:id' do
