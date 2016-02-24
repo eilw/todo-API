@@ -3,6 +3,7 @@ ENV['RACK_ENV'] ||= 'development'
 require 'sinatra/base'
 require 'json'
 require_relative './model/task'
+require_relative './model/project'
 require_relative 'data_mapper_setup'
 # require_relative './lib/numbers'
 
@@ -31,6 +32,16 @@ class Todo < Sinatra::Base
     content_type :json
     tasks = Task.all
     {task: tasks}.to_json
+  end
+
+  post '/projects' do
+    Project.create(name: params[:name])
+  end
+
+  get '/api/projects' do
+    content_type :json
+    projects = Project.all
+    {project: projects}.to_json
   end
 
   # get '/:number' do

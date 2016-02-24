@@ -58,4 +58,36 @@ $(document).ready(function(){
       };
     });
   });
+
+
+  // -------PROJECTS-------
+
+  $('#submit-project').click(function(e) {
+    e.preventDefault();
+    var nameInput = $('#project-name').val();
+    $.post('http://localhost:9292/projects', { name: nameInput })
+    $('#projects').append("<li>"+nameInput+"</li>");
+    $('#project-name').val('');
+  });
+
+
+  getProjects();
+  function getProjects(){
+    var url = 'http://localhost:9292/api/projects';
+    $.get(url, function(data){
+      displayProjects(data.project);
+    });
+  };
+
+  function displayProjects(projects) {
+    var str = "";
+    for(var i = 0; i < projects.length; i++) {
+      str += "<li id='project_" + projects[i].id + "'>" + projects[i].name + "</li>"
+    }
+    $('#projects').html(str);
+  };
+
+
+
+
 });

@@ -6,11 +6,13 @@ Completed:
 * A completed task is sent to the database, where the information is stored
 * Changes to the tasks are stored, so when the user returns, the todos are the same(completed/not completed)
 * That the completed tasks are checked
+* A user can hide the completed tasks
+* A user can create multiple projects
 
 
 Task:
-* A user can hide the completed tasks
-* A user can create multiple projects
+* Only one api serves the projects and todos
+* A user needs to be able to select the current project
 * A user can create task under the various projects
 * A user can have three projects open at the same time
 * A user can also delete a task, even if it is not completed
