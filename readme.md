@@ -3,9 +3,9 @@ Requirements
 Completed:
 * A task is added dynamically to the list, without getting having to use an api call
 * When a user clicks a task complete, it shows up under the completed area
+* A completed task is sent to the database, where the information is stored
 
 Task:
-* A completed task is sent to the database, where the information is stored
 * Changes to the tasks are stored, so when the user returns, the todos are the same(completed/not completed)
 * A user can also delete a task, even if it is not completed
 * A user can hide the completed tasks

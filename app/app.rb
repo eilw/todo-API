@@ -16,7 +16,7 @@ class Todo < Sinatra::Base
   end
 
   put '/todos/:id' do
-    todo = Task.first(params[:id])
+    todo = Task.get(params[:id])
     todo.update(completed: true)
     todo.save
     redirect('/todos')

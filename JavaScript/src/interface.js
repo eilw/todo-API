@@ -12,7 +12,7 @@ $(document).ready(function(){
   function displayTasks(tasks) {
     var str = ""
     for(var i = 0; i < tasks.length; i++) {
-        str += "<li>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
+        str += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
     };
     $('#todo').html(str);
   };
@@ -22,6 +22,16 @@ $(document).ready(function(){
   });
 
   $('#todo').on('click', '.finish', function(){
+    var id = $(this).parent().attr('id');
+    id = id.slice(5,id.length)
+    console.log(id)
+    $.ajax({
+      url: 'http://localhost:9292/todos/'+ id,
+      type: 'PUT',
+      success: function(response){
+        console.log(response);
+      }
+    });
     $('#completed').append('<li>'+$(this).parent().html()+'</li>');
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
