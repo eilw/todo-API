@@ -1,4 +1,5 @@
 <head>
+  <link rel="stylesheet" type="text/css" href="todo-manager.css">
 </head>
 <body>
   <h1></h1>
@@ -9,7 +10,10 @@
   <button type='button' id='getTasks'>Get tasks</button>
   <ul id="todo"></ul>
   <h2>Completed tasks</h2>
-  <ul id='completed'></ul>
+  <a href='#' id='toggle-list'>Hide Completed</a>
+  <section id='completed-tasks'>
+  <ul id='completed-list'></ul>
+</section>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script src='src/interface.js'></script>
 </body>

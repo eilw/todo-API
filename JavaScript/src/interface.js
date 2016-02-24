@@ -11,17 +11,15 @@ $(document).ready(function(){
   function displayTasks(tasks) {
     var uncompleted = "";
     var completed = "";
-    var inputString;
     for(var i = 0; i < tasks.length; i++) {
-      inputString = "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
       if(tasks[i].completed){
-        completed += inputString
+        completed += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'checked></input></li>"
       } else{
-        uncompleted += inputString;
+        uncompleted += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
       }
     };
     $('#todo').html(uncompleted);
-    $('#completed').html(completed);
+    $('#completed-list').html(completed);
   };
 
   $('#getTasks').click(function(){
@@ -38,7 +36,7 @@ $(document).ready(function(){
         console.log(response);
       }
     });
-    $('#completed').append('<li>'+$(this).parent().html()+'</li>');
+    $('#completed-list').append('<li>'+$(this).parent().html()+'</li>');
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
 
@@ -48,5 +46,16 @@ $(document).ready(function(){
     $.post('http://localhost:9292/todos', { content: contentInput })
     $('#todo').append("<li>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
+  });
+
+  $('#toggle-list').click(function(e) {
+    e.preventDefault();
+    $('#completed-tasks').toggle('slow', function(){
+      if ($('#completed-tasks').is(":visible")) {
+        $('#toggle-list').text('Hide Completed');
+      } else {
+        $('#toggle-list').text('Show Completed');
+      };
+    });
   });
 });
