@@ -8,16 +8,12 @@ require_relative 'data_mapper_setup'
 # require_relative './lib/numbers'
 
 class Todo < Sinatra::Base
-  # get '/todos/new' do
-  #   erb :todo_new
-  # end
 
   post '/todos' do
     @todo = Task.create(content: params[:content], project_id: params[:project_id])
   end
 
-  put '/todos/update' do
-    p 'found!!!'
+  put '/todos' do
     task_id = params[:task_id]
     project_id = params[:project_id]
     todo = Task.get(task_id)
@@ -36,11 +32,6 @@ class Todo < Sinatra::Base
     todo.destroy
   end
 
-  # get '/todos' do
-  #   @todos = Task.all
-  #   erb :todos
-  # end
-
   get '/api' do
     content_type :json
     tasks = Task.all(project_id: params[:project_id])
@@ -56,24 +47,6 @@ class Todo < Sinatra::Base
     project = Project.get(params[:id])
     project.destroy
   end
-
-  # put '/projects/:id' do
-  #   task = Task.get(params[:task_id])
-  #   task.update(project_id: params[:id])
-  #   task.save
-  # end
-
-  # get '/api/projects' do
-  #   content_type :json
-  #   projects = Project.all
-  #   {project: projects}.to_json
-  # end
-
-  # get '/:number' do
-  #   content_type :json
-  #   number = params[:number].to_i
-  #   {number: number, factors: number.factors, odd: number.odd?, even: number.even?, prime: number.prime?}.to_json
-  # end
 
   # start the server if ruby file executed directly
   run! if app_file == $0
