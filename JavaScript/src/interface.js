@@ -129,5 +129,11 @@ $(document).ready(function(){
     getTasks();
   })
 
+  $(function() {
+    $('#todo, #projects').sortable({
+      placeholder: 'highlight'
+    });
+  });
+
 
 });

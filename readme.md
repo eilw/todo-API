@@ -14,10 +14,11 @@ Completed:
 * A user only sees the tasks related to the current project
 * A user can also delete a task, even if it is not completed
 * A user can delete a project
+* A user can sort tasks in their project
+
 
 
 Task:
-* A user can sort tasks in their project
 * A user can drag a task between projects
 * The projects store the new tasks
 
