@@ -11,14 +11,19 @@ Completed:
 * Only one api serves the projects and todos
 * A user needs to be able to select the current project
 * A user can create tasks under the various projects
+* A user only sees the tasks related to the current project
 
 
 
 Task:
-* A user only sees the tasks related to the current project
-* A user can have three projects open at the same time
+
 * A user can also delete a task, even if it is not completed
-* A user can drag tasks between projects
+* A user can delete a project
+* A user can sort tasks in their project
+* A user can drag a task between projects
+* The projects store the new tasks
+
+
 * A user can add a location to the task
 * A user can open a map and see the location of where the tasks are
 * A user can tweet a todo and get it downloaded

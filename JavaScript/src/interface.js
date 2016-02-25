@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   var currentProjectID = ""
 
-  getProjects();
+  getProjects()
   setTimeout(function() {getTasks();}, 500);
   function getTasks(){
     var url = "http://localhost:9292/api?project_id=" + currentProjectID;
@@ -16,9 +16,9 @@ $(document).ready(function(){
     var completed = "";
     for(var i = 0; i < tasks.length; i++) {
       if(tasks[i].completed){
-        completed += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'checked></input></li>"
+        completed += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'checked></input><a href='#' class='delete'>X</a></li>"
       } else{
-        uncompleted += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input></li>";
+        uncompleted += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input><a href='#' class='delete'>X</a></li>";
       }
     };
     $('#todo').html(uncompleted);
@@ -36,12 +36,27 @@ $(document).ready(function(){
       url: 'http://localhost:9292/todos/'+ id,
       type: 'PUT',
       success: function(response){
-        console.log(response);
       }
     });
     $('#completed-list').append('<li>'+$(this).parent().html()+'</li>');
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
+
+  $('#task-overview').on('click', '.delete', function(e){
+    e.preventDefault();
+    var id = $(this).parent().attr('id');
+    id = id.slice(5,id.length)
+    $.ajax({
+      url: 'http://localhost:9292/todos/'+ id,
+      type: 'DELETE',
+      success: function(response){
+      }
+    });
+    $(this).parent().hide('slow',function(){$(this).remove()});
+  });
+
+
+
 
   $('#submitTodo').click(function(e) {
     e.preventDefault();

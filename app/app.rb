@@ -22,6 +22,11 @@ class Todo < Sinatra::Base
     todo.save
   end
 
+  delete '/todos/:id' do
+    todo = Task.get(params[:id])
+    todo.destroy
+  end
+
   # get '/todos' do
   #   @todos = Task.all
   #   erb :todos
