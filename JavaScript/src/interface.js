@@ -29,29 +29,29 @@ $(document).ready(function(){
     getTasks();
   });
 
-  $('#todo').on('click', '.finish', function(){
-    var id = $(this).parent().attr('id');
-    id = id.slice(5,id.length)
+  function changeTask(requestType,id) {
     $.ajax({
       url: 'http://localhost:9292/todos/'+ id,
-      type: 'PUT',
+      type: requestType,
       success: function(response){
       }
     });
-    $('#completed-list').append('<li>'+$(this).parent().html()+'</li>');
+    };
+
+
+  $('#todo').on('click', '.finish', function(){
+    var id = $(this).parent().attr('id');
+    id = id.slice(5,id.length)
+    changeTask('PUT', id);
     $(this).parent().hide('slow',function(){$(this).remove()});
+    $('#completed-list').append('<li>'+$(this).parent().html()+'</li>');
   });
 
   $('#task-overview').on('click', '.delete', function(e){
     e.preventDefault();
     var id = $(this).parent().attr('id');
     id = id.slice(5,id.length)
-    $.ajax({
-      url: 'http://localhost:9292/todos/'+ id,
-      type: 'DELETE',
-      success: function(response){
-      }
-    });
+    changeTask('DELETE', id);
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
 
