@@ -1,11 +1,17 @@
 $(document).ready(function(){
 
   var currentProjectID = ""
+  var rootURL = 'http://localhost:9292/'
+  var addTodoURL = rootURL +'todos'
+  var updateTodoURL = rootURL + 'todos/'
+  var addProjectURL = rootURL +'projects'
+  var deleteProjectURL = rootURL + 'projects/'
+  var apiURL = rootURL + 'api'
 
   getProjects()
   setTimeout(function() {getTasks();}, 500);
   function getTasks(){
-    var url = "http://localhost:9292/api?project_id=" + currentProjectID;
+    var url = apiURL + "?project_id=" + currentProjectID;
     $.get(url, function(data){
       displayTasks(data.task);
     });
@@ -29,9 +35,9 @@ $(document).ready(function(){
     getTasks();
   });
 
-  function changeTask(requestType,id) {
+  function updateDatabase(url, requestType,id) {
     $.ajax({
-      url: 'http://localhost:9292/todos/'+ id,
+      url: url + id,
       type: requestType,
       success: function(response){
       }
@@ -42,7 +48,7 @@ $(document).ready(function(){
   $('#todo').on('click', '.finish', function(){
     var id = $(this).parent().attr('id');
     id = id.slice(5,id.length)
-    changeTask('PUT', id);
+    updateDatabase(updateTodoURL, 'PUT', id);
     $(this).parent().hide('slow',function(){$(this).remove()});
     $('#completed-list').append('<li>'+$(this).parent().html()+'</li>');
   });
@@ -51,7 +57,7 @@ $(document).ready(function(){
     e.preventDefault();
     var id = $(this).parent().attr('id');
     id = id.slice(5,id.length)
-    changeTask('DELETE', id);
+    updateDatabase(updateTodoURL, 'DELETE', id);
     $(this).parent().hide('slow',function(){$(this).remove()});
   });
 
@@ -61,7 +67,7 @@ $(document).ready(function(){
   $('#submitTodo').click(function(e) {
     e.preventDefault();
     var contentInput = $('#content').val();
-    $.post('http://localhost:9292/todos', { content: contentInput, project_id: currentProjectID })
+    $.post(addTodoURL, { content: contentInput, project_id: currentProjectID })
 
     $('#todo').append("<li>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
@@ -84,15 +90,14 @@ $(document).ready(function(){
   $('#submit-project').click(function(e) {
     e.preventDefault();
     var nameInput = $('#project-name').val();
-    $.post('http://localhost:9292/projects', { name: nameInput })
+    $.post(addProjectURL, { name: nameInput })
     $('#projects').append("<li><a href='#'>"+nameInput+"</a></li>");
     $('#project-name').val('');
   });
 
 
   function getProjects(){
-    var url = 'http://localhost:9292/api';
-    $.get(url, function(data){
+    $.get(apiURL, function(data){
       displayProjects(data.project);
     });
   };
@@ -102,12 +107,20 @@ $(document).ready(function(){
     currentProjectID = projects[0].id;
     var str = "";
     for(var i = 0; i < projects.length; i++) {
-      str += "<li id='project_" + projects[i].id + "'><a href='#'>" + projects[i].name + "</a></li>"
+      str += "<li id='project_" + projects[i].id + "'><a href='#' class='projects'>" + projects[i].name + "</a><a href='#' class='delete'> X</a></li>"
     }
     $('#projects').html(str);
   };
 
-  $('#project-overview').on('click', 'a', function(e){
+  $('#project-overview').on('click', '.delete', function(e){
+    e.preventDefault();
+    var id = $(this).parent().attr('id');
+    id = id.slice(8,id.length)
+    updateDatabase(deleteProjectURL, 'DELETE', id);
+    $(this).parent().hide('slow',function(){$(this).remove()});
+  });
+
+  $('#project-overview').on('click', '.projects', function(e){
     e.preventDefault();
     var name = $(this).after().text();
     currentProjectID = $(this).parent().attr('id');
