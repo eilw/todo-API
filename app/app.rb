@@ -16,6 +16,13 @@ class Todo < Sinatra::Base
     @todo = Task.create(content: params[:content], project_id: params[:project_id])
   end
 
+  put '/todos' do
+    project_id = params[:project_id]
+    todo = Task.get(params[:id])
+    todo.update(project_id: project_id)
+    todo.save
+  end
+
   put '/todos/:id' do
     todo = Task.get(params[:id])
     todo.update(completed: true)
@@ -44,11 +51,15 @@ class Todo < Sinatra::Base
   end
 
   delete '/projects/:id' do
-    tasks = Task.all(project_id: params[:id])
-    tasks.destroy
     project = Project.get(params[:id])
     project.destroy
   end
+
+  # put '/projects/:id' do
+  #   task = Task.get(params[:task_id])
+  #   task.update(project_id: params[:id])
+  #   task.save
+  # end
 
   # get '/api/projects' do
   #   content_type :json

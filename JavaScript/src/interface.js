@@ -22,9 +22,9 @@ $(document).ready(function(){
     var completed = "";
     for(var i = 0; i < tasks.length; i++) {
       if(tasks[i].completed){
-        completed += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'checked></input><a href='#' class='delete'>X</a></li>"
+        completed += "<li class='task' id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'checked></input><a href='#' class='delete'>X</a></li>"
       } else{
-        uncompleted += "<li id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input><a href='#' class='delete'>X</a></li>";
+        uncompleted += "<li class='task' id='task_" + tasks[i].id + "'>" + tasks[i].content + " <input type='checkbox' class='finish'></input><a href='#' class='delete'>X</a></li>";
       }
     };
     $('#todo').html(uncompleted);
@@ -42,7 +42,16 @@ $(document).ready(function(){
       success: function(response){
       }
     });
-    };
+  };
+
+  function updateProject(url, requestType, id, project_id) {
+    $.ajax({
+      url: url + id + project_id,
+      type: requestType,
+      success: function(response){
+      }
+    });
+  };
 
 
   $('#todo').on('click', '.finish', function(){
@@ -69,7 +78,7 @@ $(document).ready(function(){
     var contentInput = $('#content').val();
     $.post(addTodoURL, { content: contentInput, project_id: currentProjectID })
 
-    $('#todo').append("<li>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
+    $('#todo').append("<li class='task'>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
   });
 
@@ -129,11 +138,21 @@ $(document).ready(function(){
     getTasks();
   })
 
+  // $(function() {
+  //   $('#todo, #projects').sortable({
+  //     placeholder: 'highlight'
+  //   });
+  // });
   $(function() {
-    $('#todo, #projects').sortable({
-      placeholder: 'highlight'
+    $('#box_one').draggable("enable");
+
+    $('#box_two').droppable({
     });
+
   });
+
+    // console.log($(this))
+
 
 
 });

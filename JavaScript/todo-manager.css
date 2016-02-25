@@ -16,3 +16,15 @@
   text-decoration: line-through;
 
 }
+
+#box_one {
+  background-color: green;
+  width: 30px;
+  height: 30px;
+}
+
+#box_two {
+  background-color: red;
+  width: 30px;
+  height: 30px;
+}
