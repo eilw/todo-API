@@ -3,10 +3,13 @@ $(document).ready(function(){
   var currentProjectID = ""
   var rootURL = 'http://localhost:9292/'
   var addTodoURL = rootURL +'todos'
+  var updateTodoProjectNR = rootURL + 'todos/update'
   var updateTodoURL = rootURL + 'todos/'
   var addProjectURL = rootURL +'projects'
   var deleteProjectURL = rootURL + 'projects/'
   var apiURL = rootURL + 'api'
+  var taskID = ""
+  var projectID = "blabla"
 
   getProjects()
   setTimeout(function() {getTasks();}, 500);
@@ -29,6 +32,7 @@ $(document).ready(function(){
     };
     $('#todo').html(uncompleted);
     $('#completed-list').html(completed);
+    $('.task').draggable({revert: 'invalid'});
   };
 
   $('#getTasks').click(function(){
@@ -44,13 +48,14 @@ $(document).ready(function(){
     });
   };
 
-  function updateProject(url, requestType, id, project_id) {
+  function updateProject(url, requestType, task_id, project_id) {
     $.ajax({
-      url: url + id + project_id,
+      url: url + "?project_id=" + project_id + "&task_id=" + task_id,
       type: requestType,
       success: function(response){
       }
     });
+    console.log(url + "?project_id=" + project_id + "&task_id=" + task_id);
   };
 
 
@@ -119,7 +124,18 @@ $(document).ready(function(){
       str += "<li id='project_" + projects[i].id + "'><a href='#' class='projects'>" + projects[i].name + "</a><a href='#' class='delete'> X</a></li>"
     }
     $('#projects').html(str);
+    $('.projects').droppable({
+      tolerance: 'touch',
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "dropped" )
+        findTaskId(ui.draggable)
+        findProjectId($(this))
+        updateTask()
+      }
+    });
   };
+
 
   $('#project-overview').on('click', '.delete', function(e){
     e.preventDefault();
@@ -144,15 +160,38 @@ $(document).ready(function(){
   //   });
   // });
   $(function() {
-    $('#box_one').draggable("enable");
+    $('#box_one').draggable({revert: 'invalid'});
+    $('#testingDrop').draggable({revert: 'invalid'});
 
     $('#box_two').droppable({
-    });
+      tolerance: 'touch',
+      drop: function( event, ui ) {
+        $( this )
+          .addClass( "dropped" );
+        findTaskId(ui.draggable);
+        findProjectId($(this));
 
+        }
+      })
   });
 
-    // console.log($(this))
+  function findTaskId(item) {
+    taskID = item.attr('id');
+    taskID = taskID.slice(5,taskID.length)
+    item.remove();
+  }
 
+  function findProjectId(item) {
+    projectID = item.parent().attr('id');
+    projectID = projectID.slice(8,projectID.length)
+  };
+
+  function updateTask(){
+    updateProject(updateTodoProjectNR, 'PUT', taskID, projectID)
+    $('h6').text(projectID);
+    $('h7').text(taskID);
+    console.log('say hi')
+  }
 
 
 });

@@ -16,9 +16,11 @@ class Todo < Sinatra::Base
     @todo = Task.create(content: params[:content], project_id: params[:project_id])
   end
 
-  put '/todos' do
+  put '/todos/update' do
+    p 'found!!!'
+    task_id = params[:task_id]
     project_id = params[:project_id]
-    todo = Task.get(params[:id])
+    todo = Task.get(task_id)
     todo.update(project_id: project_id)
     todo.save
   end
