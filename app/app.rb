@@ -43,6 +43,13 @@ class Todo < Sinatra::Base
     Project.create(name: params[:name])
   end
 
+  delete '/projects/:id' do
+    tasks = Task.all(project_id: params[:id])
+    tasks.destroy
+    project = Project.get(params[:id])
+    project.destroy
+  end
+
   # get '/api/projects' do
   #   content_type :json
   #   projects = Project.all
