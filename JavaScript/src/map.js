@@ -2,32 +2,15 @@ var map;
 var markers = []
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
+var infos = [];
 
 
 function initMap() {
   var london = {lat: 51.482924, lng: 0}
-  var makers = {lat: 51.582924, lng: 0}
   map = new google.maps.Map(document.getElementById('map'), {
     center: london,
-    zoom: 10
+    zoom: 12
   });
-
-var marker = new google.maps.Marker({
-  position: london,
-  title: 'Hello World!'
-});
-markers.push(marker)
-
-var marker2 = new google.maps.Marker({
-  position: makers,
-  title: 'makers 2!'
-});
-markers.push(marker2)
-
-for (var i=0;i<markers.length;i++){
-  markers[i].setMap(map);
-}
-
   getMarkers();
 };
 
@@ -51,17 +34,48 @@ for (var i=0;i<markers.length;i++){
         var latIn = task[i].lat;
         var longIn = task[i].long;
         var location = {lat: latIn, lng: longIn};
-        addMarker(location,map);
+        var taskContent = task[i].content
+        addMarker(location,map, taskContent);
     }
     }
   }
 
-  function addMarker(location, map) {
+  function addMarker(location, map, taskContent) {
     // Add the marker at the clicked location, and add the next-available label
     // from the array of alphabetical characters.
     var marker = new google.maps.Marker({
       position: location,
       label: labels[labelIndex++ % labels.length],
       map: map
-    });
-  }
+    })
+      map.setCenter(marker.getPosition())
+      var content = 'Task: ' + taskContent;
+      var infowindow = new google.maps.InfoWindow()
+      google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
+              return function() {
+              /* close the previous info-window */
+              closeInfos();
+                 infowindow.setContent(content);
+                 infowindow.open(map,marker);
+
+              /* keep the handle, in order to close it on next click event */
+              infos[0]=infowindow;
+              };
+      })(marker,content,infowindow));
+  };
+
+
+function closeInfos(){
+
+   if(infos.length > 0){
+
+      /* detach the info-window from the marker ... undocumented in the API docs */
+      infos[0].set("marker", null);
+
+      /* and close it */
+      infos[0].close();
+
+      /* blank the array */
+      infos.length = 0;
+   }
+}
