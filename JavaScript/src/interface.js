@@ -72,7 +72,9 @@ $(document).ready(function(){
   $('#submitTodo').click(function(e) {
     e.preventDefault();
     var contentInput = $('#content').val();
-    $.post(addTodoURL, { content: contentInput, project_id: currentProjectID })
+    var latIn = parseFloat($('#geo_lat').val());
+    var longIn = parseFloat($('#geo_long').val());
+    $.post(addTodoURL, { content: contentInput, project_id: currentProjectID, lat: latIn, long: longIn })
     $('#todo').append("<li class='task'>"+contentInput+"<input type='checkbox' class='finish'></input></li>");
     $('#content').val('');
   });

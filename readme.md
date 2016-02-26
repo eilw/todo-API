@@ -25,5 +25,4 @@ Task:
 
 * A user can add a location to the task
 * A user can open a map and see the location of where the tasks are
-* A user can tweet a todo and get it downloaded
 * Tasks that are dynamically added have a task id

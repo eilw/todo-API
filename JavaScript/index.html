@@ -18,7 +18,12 @@
     <h2> Tasks</h2>
     <form action='http://localhost:9292/todos' method='POST'>
       <input type='text' name='content' id="content" placeholder="Add task">
+      <input type='text' name='geo' id="geo_lat" placeholder="Add lat">
+      <input type='text' name='geo' id="geo_long" placeholder="Add long">
       <input type='submit' value='Submit' id='submitTodo'>
+      <p> var london = {lat: 51.482924, lng: 0} </p>
+      <a href='map.html'>See map</a>
+
     </form>
     <!-- <button type='button' id='getTasks'>Get tasks</button> -->
     <ul id="todo"></ul>
@@ -26,6 +31,9 @@
     <a href='#' id='toggle-list'>Hide Completed</a>
     <section id='completed-tasks'>
       <ul id='completed-list'></ul>
+    </section>
+
+  </body>
     </section>
 
 

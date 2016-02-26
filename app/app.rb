@@ -10,7 +10,12 @@ require_relative 'data_mapper_setup'
 class Todo < Sinatra::Base
 
   post '/todos' do
-    @todo = Task.create(content: params[:content], project_id: params[:project_id])
+    if params[:lat] != 'NaN'
+      Task.create(content: params[:content], project_id: params[:project_id],
+                        lat: params[:lat], long: params[:long])
+    else
+      Task.create(content: params[:content], project_id: params[:project_id])
+    end
   end
 
   put '/todos' do
@@ -33,10 +38,16 @@ class Todo < Sinatra::Base
   end
 
   get '/api' do
-    content_type :json
-    tasks = Task.all(project_id: params[:project_id])
-    projects = Project.all
-    {task: tasks, project: projects}.to_json
+    if (params[:maps] == 'request')
+      content_type :json
+      tasks= Task.all()
+      {task: tasks}.to_json
+    else
+      content_type :json
+      tasks = Task.all(project_id: params[:project_id])
+      projects = Project.all
+      {task: tasks, project: projects}.to_json
+    end
   end
 
   post '/projects' do

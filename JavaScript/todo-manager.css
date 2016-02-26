@@ -1,3 +1,8 @@
+#locationSetter{
+  height: 100px;
+
+}
+
 #project-overview{
   padding-left: 30px;
   background-color: #e2f2f7;
@@ -43,4 +48,8 @@
 
 #projects li{
   margin-top: 20px;
+}
+
+#map{
+  height: 50%
 }
