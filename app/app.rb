@@ -56,6 +56,8 @@ class Todo < Sinatra::Base
 
   delete '/projects/:id' do
     project = Project.get(params[:id])
+    tasks = Task.all(project_id: params[:id])
+    tasks.destroy
     project.destroy
   end
 
