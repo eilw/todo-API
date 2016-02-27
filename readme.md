@@ -52,13 +52,13 @@ Installation:
 Screenshots:
 -----
 Overview
-![Overview](/docs/screenshot/task.png)
+![Overview](/docs/screenshots/task.png)
 
 Second project
-![Second_roll](/docs/screenshot/projects.png)
+![Second_roll](/docs/screenshots/projects.png)
 
 Maps
-![Result](/docs/screenshot/map.png)
+![Result](/docs/screenshots/map.png)
 
 Team:
 -----
